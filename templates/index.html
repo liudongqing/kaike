@@ -38,12 +38,12 @@ $(document).ready(function() {
 <a href="/975655" class="on02">wuyouz</a><a href="/logout" class="on02">登出</a> 
 </div> 
 <ul> 
-	<li><a href="/intro" title="服务介绍" >课程集市</a></li> 
+	<li><a href="/" title="服务介绍" >课程集市</a></li> 
 <li id="myproject"> 
-<a href="/projects" title="我的课表">我的课表</a> 
+<a href="/" title="我的课表">我的课表</a> 
 </li> 
 <li id="mydemohour"> 
-<a href="/my/credits" title="我要开课">我要开课</a> 
+<a href="/course/apply" title="我要开课">我要开课</a> 
 </li> 
 </ul> 
 </div> 
@@ -52,24 +52,23 @@ $(document).ready(function() {
 <div class="projectwrap projectwraphome"> 
 <div class="urllist"> 
 {% for course in course_list %}	
-<ul> 
-	<li class="list01"><a href="/course/{{course.id}}" title="{{course.title}}"><img src="image/{{course.poster}}">{{course.title}}
-</a></li> 
-<li class="list02"><a href="/user/{{course.teachers|first}}">{{course.teachers.all|first}}<a/> 发起于 <a href="/shcool/{{course.school.id}}"><strong> {{course.school}}</strong><a/></li> 
+<ul>
+<li class="list01"><a href="/course/{{course.id}}" title="{{course.title}}"><img src="image/{{course.poster}}">{{course.title}}</a></li> 
+<li class="list02"><a href="/user/{{course.teachers.all|first}}">{{course.teachers.all|first}}</a> 发起于 <a href="/shcool/{{course.school.id}}"><strong> {{course.school}}</strong></a></li> 
 <li class="list03">{{course.introduction}}</li> 
 <li class="list04"> 
 <div class="projectpledgedwrap"> 
-<div style="WIDTH:100%;" class="projectpledged"></div> 
+<div style="WIDTH:50%;" class="projectpledged"></div> 
 </div> 
 <div class="projectstats"> 
-<p class="widtha"><strong>{{progress}}</strong>进度</p> 
-<p class="widthb"><strong>{{register}}</strong>人数</p> 
+<p class="widtha"><strong>50%</strong>进度</p> 
+<p class="widthb"><strong>28</strong>人数</p> 
 </div></li> 
 </ul> 
 {% endfor %}
 </div> 
 </div> 
- 
+</div> 
 <div id=footer-wrap> 
 <div id=footer class="container"> 
 <div id=etc> 

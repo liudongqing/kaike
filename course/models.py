@@ -47,10 +47,12 @@ class Lecture(models.Model):
     course = models.ForeignKey(Course)
     open_time= models.DateTimeField()
     duration = models.IntegerField()
+    videourl = models.URLField()
+    outline = models.TextField()    
 
     def __unicode__(self):
         return self.title
-
+    
 class Reading(models.Model):
     title = models.CharField(max_length=100)
     catalog = models.IntegerField()
