@@ -35,7 +35,11 @@ $(document).ready(function() {
 <a href="/" class="logo"><img src="/image/logo.png" title="公开课" width='183' height="70"></a> 
 <div class="menu"> 
 <div> 
-<a href="/975655" class="on02">wuyouz</a><a href="/logout" class="on02">登出</a> 
+{% if logged %}
+<a href="/user/{{user.id}}" class="on02">{{user.name}}</a><a href="/logout" class="on02">登出</a> 
+{% else %}
+<a href="/login" class="on02">登录</a> 
+{% endif %}
 </div> 
 <ul> 
 	<li><a href="/" title="服务介绍" >课程集市</a></li> 
