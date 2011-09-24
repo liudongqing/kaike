@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from kaike.views import Home
+from kaike.views import Home,login,logout
 from django.conf import settings
 from django.contrib import admin
 from django.views.generic.list_detail import object_detail
@@ -26,6 +26,9 @@ urlpatterns = patterns('',
     (r'^lecture/(?P<object_id>\d+)/forum/$', object_detail, {'template_name': 'lecture_forum.html','queryset': Lecture.objects.all()}),
                        
     ('^course/apply$',direct_to_template,{'template':'apply.html'}),
+    ('^login$',direct_to_template,{'template':'login.html'}),
+    ('^user_login$', login),
+    ('^logout$', logout),
 
            
                        
