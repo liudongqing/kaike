@@ -50,21 +50,21 @@ $(document).ready(function() {
 </div></div> 
  
 <div class="projectwrap projectwraphome"> 
-<div class="urllist"> 
+<div class="urllist">
+{% for lecture in object.lecture_set.all %}
 <ul> 
-	<li class="list01">{{object.title}}<img src="http://img3.douban.com/view/note/large/public/p160135461-1.jpg"/>
+	<li class="list02"><a href="/course/{{lecture.course.id}}">{{lecture.course.title}}</a></li>
+<li class="list01"><a href="/lecture/{{lecture.id}}" title="{{lecture.title}}"><img src="/image/{{lecture.poster}}">{{lecture.title}}
 </li> 
-<li class="list02"> 发起于{{object.school}}</li> 
-<li class="list03">{{object.description}}</li> 
+
+<li class="list03">{{lecture.introduction}}</li> 
 <li class="list04"> 
-<div class="projectpledgedwrap"> 
-<div style="WIDTH:100%;" class="projectpledged"></div> 
-</div> 
 <div class="projectstats"> 
-<p class="widtha"><strong>{{course.progress}}</strong>进度</p> 
-<p class="widthb"><strong>{{course.students|length}}</strong>人数</p> 
-</div></li> 
+<p class="widtha"><strong>{{lecture.duration}}分钟</strong></p> 
+</div>
+</li> 
 </ul> 
+{% endfor %}
 </div> 
 </div> 
  
