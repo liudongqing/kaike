@@ -4,6 +4,7 @@ from django.template import Context
 from kaike.course.models import Course,User
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
+from oauth import oauth
 
 
 def Home(request):

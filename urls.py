@@ -6,6 +6,7 @@ from django.views.generic.list_detail import object_detail
 from django.views.generic.list_detail import object_list
 from kaike.course.models import *
 from django.views.generic.simple import direct_to_template
+from douban import douban_login
 
 admin.autodiscover()
 
@@ -28,6 +29,7 @@ urlpatterns = patterns('',
     ('^course/apply$',direct_to_template,{'template':'apply.html'}),
     ('^login$',direct_to_template,{'template':'login.html'}),
     ('^user_login$', login),
+    ('^dlogin$', douban_login),
     ('^logout$', logout),
 
            
