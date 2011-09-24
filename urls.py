@@ -16,7 +16,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     ('^$',Home),
 
-    (r'^image/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/Users/wuyouz/Projects/kaike/image'}),
+    (r'^image/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     (r'^admin/', include(admin.site.urls)),
     (r'^admin/course/()', include(admin.site.urls)),
     (r'^course/(?P<object_id>\d+)/$', object_detail, {'template_name': 'course_details.html','queryset': Course.objects.all()}),
