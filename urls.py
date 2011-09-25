@@ -6,7 +6,7 @@ from django.views.generic.list_detail import object_detail
 from django.views.generic.list_detail import object_list
 from kaike.course.models import *
 from django.views.generic.simple import direct_to_template
-from douban import douban_login
+from douban_client import douban_login
 
 admin.autodiscover()
 
