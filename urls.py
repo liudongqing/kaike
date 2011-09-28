@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from kaike.views import Home,login,logout
+from kaike.views import Home,logout
 from django.conf import settings
 from django.contrib import admin
 from django.views.generic.list_detail import object_detail
@@ -25,21 +25,10 @@ urlpatterns = patterns('',
     (r'^lecture/(?P<object_id>\d+)/$', object_detail, {'template_name': 'lecture_details.html','queryset': Lecture.objects.all()}),
     (r'^lecture/(?P<object_id>\d+)/assignment/$', object_detail, {'template_name': 'assignment_details.html','queryset': Lecture.objects.all()}),
     (r'^lecture/(?P<object_id>\d+)/forum/$', object_detail, {'template_name': 'lecture_forum.html','queryset': Lecture.objects.all()}),
-                       
+    (r'^comments/', include('django.contrib.comments.urls')),         
     ('^course/apply$',direct_to_template,{'template':'apply.html'}),
-    ('^login$',direct_to_template,{'template':'login.html'}),
-    ('^user_login$', login),
     ('^dlogin$', douban_login),
     ('^logout$', logout),
 
            
-                       
-    # Example:
-    # (r'^kaike/', include('kaike.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # (r'^admin/', include(admin.site.urls)),
 )

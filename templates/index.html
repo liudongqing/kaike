@@ -36,7 +36,7 @@ $(document).ready(function() {
 <div class="menu"> 
 <div> 
 {% if logged %}
-<a href="/user/{{user.id}}" class="on02">{{user.name}}</a><a href="/logout" class="on02">登出</a> 
+<a href="/user/{{user.id}}" class="on02">{{user.first_name}}</a><a href="/logout" class="on02">登出</a> 
 {% else %}
 <a href="/signup" class="on02">注册</a><a href="/login" class="on02">登录</a> <a href="/dlogin" class="on02"><img src="/image/douban.png"></img></a>
 {% endif %}

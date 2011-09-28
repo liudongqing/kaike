@@ -67,10 +67,15 @@ $(document).ready(function() {
 <div id=content> 
 <div id=leftcol> 
 <div class="comment_new  liuyang"> 
-<form accept-charset="UTF-8" action="/projects/297172/comments" class="new_comment" id="new_comment" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="Ppcc2yjEyvILj6J1AKXzdqg1IRjB86YarlKEqN8BQn8=" /></div> 
+{% load comments %}
+{% get_comment_count for object as comment_count %}
+
+{% render_comment_list for object %}
+<form accept-charset="UTF-8" action="/comments/post/" class="new_comment" id="new_comment" method="post">
+	{% csrf_token %}  
 <textarea class="inputregoff textly" cols="40" id="comment_content" name="comment[content]" onblur="this.className='inputregoff textly'" onfocus="this.className='inputregon textly'" rows="3"></textarea> 
-<a href="#new_comment_submit" class="input_onoff_on submit"><span>我要提问</span></a> 
-<a href="#new_comment_submit" class="input_onoff_on submit"><span>我有想法</span></a> 
+<input type="hidden" name="content_type" value="course.lecture" id="id_content_type" /><input type="hidden" name="object_pk" value="{{object.id}}" id="id_object_pk" />
+<input type="submit"  value="提问" />  
 </form> 
 </div> 
 <div class="comment_login displayoff"> 
