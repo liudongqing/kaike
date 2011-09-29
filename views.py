@@ -1,7 +1,9 @@
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.template import Context
-from kaike.course.models import Course,User
+from kaike.course.models import Course,User,Lecture
+from kaike.answers.models import Question,new_question,new_answer
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.contrib import auth
@@ -21,3 +23,60 @@ def logout(request):
     auth.logout(request)
     return Home(request)
 
+def list_questions(request,lecture_id):
+    """
+    load all the questions according to the lecture id.
+    """
+    context = {}
+    context.update(csrf(request))
+    if request.user :
+        context['logged'] = True
+    try:
+        lecture = Lecture.objects.get(pk=lecture_id)
+        question_list = Question.objects.filter(topic=lecture.title)
+        context['lecture'] = lecture
+        context['question_list'] = question_list
+        print question_list
+    except Exception as e:
+        print e
+    
+    t = get_template('lecture_forum.html')
+    html = t.render(Context(context))
+    
+    return HttpResponse(html)
+    
+def ask(request,lecture_id):
+    if request.user:
+         lecture = Lecture.objects.get(pk=lecture_id)
+         q = new_question(request.user,title=request.POST['title'],content = request.POST['content'],topic=lecture.title)
+         q.save()
+    return redirect('/lecture/'+lecture_id+'/forum')    
+
+def reply(request,lecture_id,question_id):
+    if request.user:
+         lecture = Lecture.objects.get(pk=lecture_id)
+         question = Question.objects.get(pk=question_id)
+         a = new_answer(request.user,content=request.POST['content'],question=question)
+         a.save()
+    return redirect('/lecture/'+lecture_id+'/forum')   
+
+def expand_question(request,lecture_id,question_id): 
+    """
+    load all the questions according to the lecture id.
+    """
+    context = {}
+    context.update(csrf(request))
+    if request.user :
+        context['logged'] = True
+    try:
+        lecture = Lecture.objects.get(pk=lecture_id)
+        expand_question= Question.objects.get(pk=question_id)
+        context['lecture'] = lecture
+        context['expand_question'] = expand_question
+    except Exception as e:
+        print e
+    
+    t = get_template('lecture_forum.html')
+    html = t.render(Context(context))
+    
+    return HttpResponse(html)

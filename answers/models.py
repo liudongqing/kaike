@@ -10,6 +10,9 @@ class Question(models.Model):
     content = models.TextField( max_length=3000)
     topic  = models.TextField()
     
+    def __unicode__(self):
+        return self.title
+    
 def new_question(user,title, content,topic):
     """
     create new question only if the given user is logged in. or else raise Error
@@ -25,4 +28,11 @@ class Answer(models.Model):
     content = models.TextField( max_length=3000)
     question = models.ForeignKey(Question)
     
+    def __unicode__(self):
+        return self.title
 
+def new_answer(user,question,content):
+    if user and user.is_authenticated():
+        return Answer.objects.create(user = user,question=question,content=content,timestamp=time.time())
+    else:
+        raise Exception("User not authenticated")

@@ -2,24 +2,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
 <html> 
 <head> 
-	<title>公开课</title> 
+<title>公开课</title> 
 <meta http-equiv="x-ua-compatible" content="ie=7"> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 <meta name="csrf-param" content="authenticity_token"/> 
 <meta name="csrf-token" content="3yvNdQgsZRfkiYc2lmMrUWKeMWLJYGi+XNhwQj5wlPw="/> 
-<link href="http://assets.demohour.com/stylesheets/base.css?1313734092" media="screen" rel="stylesheet" type="text/css"> 
-<link href="http://assets.demohour.com/stylesheets/compass.css?1313734092" media="screen" rel="stylesheet" type="text/css" /> 
-
-<script src="http://assets.demohour.com/javascripts/jquery.min.js?1310662622" type="text/javascript"></script> 
-<script src="http://assets.demohour.com/javascripts/application.js?1313532634" type="text/javascript"></script> 
-<script src="http://assets.demohour.com/javascripts/player/jwplayer.js?1308803539" type="text/javascript"></script>
  
-<script type="text/javascript"> 
-//<![CDATA[
-$(document).ready(function() {
-	
-})//]]>
-</script> 
 </head> 
 <body id="projects_show" class="projects project"> 
 <div id="headwrap"> 
@@ -52,54 +40,75 @@ $(document).ready(function() {
 <div id=running-board style="margin-bottom:15px"> 
 <div class=content> 
 <div id=headrow> 
-<h1 id=name><a href="/projects/297171">{{object.title}}</a></h1> 
-<p>主讲人: <a href="/975145">{{object.teacher}}</a></p> 
+<h1 id=name><a href="/projects/297171">{{lecture.title}}</a></h1> 
+<p>主讲人: <a href="/975145">{{lecture.teacher}}</a></p> 
 </div> 
 <ul id=running-board-nav class=menu-tabs> 
-<li><a href="/lecture/{{object.id}}">课堂主页</a> </li> 
-<li><a  href="/lecture/{{object.id}}/assignment">作业<span class="count" id="message_count">{{object.assignment_set.count}}</span></a> </li> 
-<li><a  class=current href="/lecture/{{object.id}}/forum">提问讨论<span class="count" id="comment_count">8</span></a> </li> 
-<li><a  href="/projects/297171/backers">听讲者<span class="count" id="backer_count">28</span></a> </li> 
+<li><a href="/lecture/{{lecture.id}}">课堂主页</a> </li> 
+<li><a  href="/lecture/{{lecture.id}}/assignment">作业<span class="count" id="message_count">{{lecture.assignment_set.count}}</span></a> </li> 
+<li><a  class=current href="/lecture/{{lecture.id}}/forum">提问讨论<span class="count" id="comment_count">8</span></a> </li>  
 <li id="project_setting" style="display:none;"><a  href="/projects/297171/edit">项目设置<span class="count" id="project_status">上线中</span></a> </li> 
 </ul> 
 </div></div> 
 
 <div id=content> 
 <div id=leftcol> 
-<div class="comment_new  liuyang"> 
-{% load comments %}
-{% get_comment_count for object as comment_count %}
+<ul class="systemliuyan" id="list_comments">
+{% if expand_question %} 
 
-{% render_comment_list for object %}
-<form accept-charset="UTF-8" action="/comments/post/" class="new_comment" id="new_comment" method="post">
-	{% csrf_token %}  
-<textarea class="inputregoff textly" cols="40" id="comment_content" name="comment[content]" onblur="this.className='inputregoff textly'" onfocus="this.className='inputregon textly'" rows="3"></textarea> 
-<input type="hidden" name="content_type" value="course.lecture" id="id_content_type" /><input type="hidden" name="object_pk" value="{{object.id}}" id="id_object_pk" />
+{% if logged %}
+<div class="reply_new"> 
+<form accept-charset="UTF-8" action="/lecture/{{lecture.id}}/forum/question/{{expand_question.id}}/reply" class="new_reply" id="new_reply" method="post">
+	{% csrf_token %} 
+<textarea class="inputregoff textly" cols="40" id="comment_content" name="content" rows="3"></textarea> 
+<input type="submit"  value="回答" />  
+</form> 
+</div> 
+{% else %}
+<div class="comment_login displayoff"> 
+<p>您必须 <a href="/login?url=http%3A%2F%2Fwww.demohour.com%2Fprojects%2F297172%2Fupdates">登入</a> 才能回答 </p> 
+</div> 
+{% endif %}
+
+<li id="question_{{expand_question.id}}">   
+<div class="question"><a href="/user/user.id" class="user">{{expand_question.user.first_name}}</a></div> 
+<div class="question"><p>{{expand_question.title}}</p></div>
+<div class="question"><p>{{expand_question.content}}</p></div> 
+</li>
+
+
+{% for answer in expand_question.answer_set.all %}
+<li id="answer_{{answer.id}}">   
+<div class="answer"><p>{{answer.content}}</p></div>
+<div class="answer"><a href="/user/user.id" class="user">{{answer.user.first_name}}</a></div> 
+</li>
+{% endfor %}
+
+{% else %}
+{% if logged %}
+<div class="comment_new"> 
+<form accept-charset="UTF-8" action="/lecture/{{lecture.id}}/forum/ask" class="new_comment" id="new_comment" method="post">
+	{% csrf_token %}
+<input type="text" name="title" />  
+<textarea class="inputregoff textly" cols="40" id="comment_content" name="content" rows="3"></textarea> 
 <input type="submit"  value="提问" />  
 </form> 
 </div> 
+{% else %}
 <div class="comment_login displayoff"> 
-<p>您必须 <a href="/login?url=http%3A%2F%2Fwww.demohour.com%2Fprojects%2F297172%2Fupdates">登入</a> 才能张贴回应 </p> 
+<p>您必须 <a href="/login?url=http%3A%2F%2Fwww.demohour.com%2Fprojects%2F297172%2Fupdates">登入</a> 才能提问 </p> 
 </div> 
+{% endif %}
 
-<ul class="systemliuyan" id="list_comments"> 
-<li id="comment_397"> 
-<a href="/977484" class="newavatar"><img src="http://img3.douban.com/icon/u1006276-16.jpg" width=40 height=40></a> 
-<div class="input_onoff_on submit"><span>问题</span></div> 
-<div class="newauthor"><span>2 天以前</a></span><a href="/977484" class="authornichen">wuyouz</a></div> 
-<div class="newauthor"><p>文艺复兴之前也有宫廷舞和民间舞吧？文艺复兴中的什么元素直接推动了芭蕾的兴起呢？为什么芭蕾在文艺复兴前没有产生呢？<div class="newauthor"><p></p><a href="#397" class="newreply new_reply">回复</a></div> 
-<ul class="systemliuyanlist" id="comments_397"> 
-<li id="comment_402"> 
-<a href="/975124" class="newavatar"><img src="http://img3.douban.com/icon/u1375170-1.jpg" width=40 height=40></a> 
-<div class="newauthor"><span>大约 6 小时以前</span><a class="authornichen" href="/975124">永无止境</a></div> 
-中世纪时期，古典文化教育基本体现在教会和神职人员那里，那时候有的国王甚至是文盲，不懂拉丁语，更不用提民间的文化水平了。 
-<p/><p/>    正是在文艺复兴时期人文主义者的推动之下，舞蹈成为贵族社交生活的重要组成部分，也成为贵族人文教育的重要环节。贵族和社会上层对于文雅礼仪和古典文化的追求，促进了宫廷芭蕾的发展。 
-<p/><p/	>    下一讲以分析芭蕾历史上公认的第一部芭蕾舞剧为主，我们将会更加鲜明感受到人文主义对芭蕾形成的促进作用。
-<div class="newauthor"><p></p></div> 
-</div> 
+{% for question in question_list %}
+<li id="question_{{question.id}}">   
+<div class="question"><a href="/user/user.id" class="user">{{question.user.first_name}}</a></div> 
+<div class="question"><p>{{question.title}}</p></div>
+<div class="question"><p>{{question.content}}</p><a href="/lecture/{{lecture.id}}/forum/question/{{question.id}}/" class="new_reply">回复（{{question.answer_set.all|length}}）</a></div> 
 </li>
-<ul>
-</li>
+{% endfor %}
+
+{% endif %}
 </ul>
 </div> 
 
@@ -107,7 +116,7 @@ $(document).ready(function() {
 <div id=moneyraised> 
 <h2>课程进度</h2> 
 
-<span style="WIDTH:40%;" class="bfbis">40%<span> 
+<span style="WIDTH:40%;" class="bfbis">40%</span> 
 <div style="WIDTH:40%;" class="projectpledged"></div> 
  
 <div class="divh5"> 
@@ -122,7 +131,7 @@ $(document).ready(function() {
 <div id=what-you-get> 
 <div class="reward"> 
 <div class=dollasignage> 
-<H3><a href="http://www.douban.com/people/{{object.teacher.douban_id}}">{{object.teacher}}</a> <span class=num-backers>主讲</span></H3> 
+<H3><a href="http://www.douban.com/people/{{object.teacher.douban_id}}">{{lecture.teacher}}</a> <span class=num-backers>主讲</span></H3> 
 <a href="/projects/297172/pledges/779" title="" onfocus="this.blur()" onmouseover="this.className='ademooffhover'" onmouseout="this.className='ademooffon'" onMouseDown="this.className='ademooffclick'" class="ademooffon"><span>问老师</span></a> 
 
 </div> 
