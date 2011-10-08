@@ -8,13 +8,19 @@
 {% for course in course_list %}	
 <ul>
 <li class="list01"><a href="/course/{{course.id}}" title="{{course.title}}"><h2>{{course.title}}</h2><img src="image/{{course.poster}}" alt="{{course.title}}"></a></li> 
-<li class="list02"><a href="/user/{{course.teachers.all|first}}">{{course.teachers.all|first}}</a> 发起于 <a href="/shcool/{{course.school.id}}"><strong> {{course.school}}</strong></a></li> 
+<li class="list02"><a href="/user/{{course.teachers.all|first}}">{{course.teachers.all.0.first_name}}</a> 发起于 <a href="/shcool/{{course.school.id}}"><strong> {{course.school}}</strong></a></li> 
 <li class="list03">{{course.introduction}}</li> 
 <li class="list04"> 
-<div class="coursestat"> 
-<p class="widtha"><strong>50%</strong>进度</p> 
-<p class="widthb"><strong>28</strong>人数</p> 
-</div></li> 
+<span>课数:<strong>{{course.lecture_set.count}}</strong></span>
+{% if logged %}
+{% if course in reg_courses %}
+<form class="fright" action="/course/{{course.id}}/quit/"><input type="submit"  method="post" value="退出"/></form>
+{% else %}
+<form class="fright" action="/course/{{course.id}}/register/"><input type="submit"  method="post" value="报名"/></form>
+{% endif %}
+{% endif %}
+报名人数：<strong>28</strong>
+</li> 
 </ul> 
 {% endfor %}
 </div> 

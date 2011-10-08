@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -11,21 +12,13 @@ class School(models.Model):
     def __unicode__(self):
         return self.name
 
-class User(models.Model):
-    name = models.CharField(max_length=40)
-    email = models.EmailField()
-    douban_id = models.CharField(max_length=40)
-
-    def __unicode__(self):
-        return self.name
-
 class Course(models.Model):
     title = models.CharField(max_length=100)
     introduction = models.TextField()
     teachers = models.ManyToManyField(User)
     poster = models.CharField(max_length=100)
     school= models.ForeignKey(School)
-    open_date= models.DateField()
+    open_date= models.DateField(auto_now=True)
     
     def __unicode__(self):
         return self.title
@@ -33,11 +26,13 @@ class Course(models.Model):
 class Register(models.Model):
     course = models.ForeignKey(Course)
     student = models.ForeignKey(User)
-    reg_type = models.IntegerField()
 
     def __unicode__(self):
         return "{} register {}".format(student,course)
-
+    
+    @classmethod
+    def is_registered(cls,user,course):
+        return cls.objects.filter(course=course,student=user).count() != 0
 
 class Lecture(models.Model):
     title = models.CharField(max_length=100)
@@ -71,3 +66,14 @@ class Assignment(models.Model):
      def __unicode__(self):
          return self.title
 
+def register(user,course):
+    if user and user.is_authenticated() and course:
+        try:
+            register = Register.objects.get(course=course,student=user)
+        except :
+            register = Register.objects.create(course=course,student=user)
+            register.save()
+        return register
+    return None
+    
+    

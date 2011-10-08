@@ -1,0 +1,25 @@
+{% include "./parts/header.html" %}
+<body id="lecture-forum" > 
+{% include "./parts/nav.html" %} 
+<div id="wrapper">
+{% include "./parts/menu.html" %}
+<div id=content> 
+<div id="forum"  class="leftcol"> 
+<ul class="mbt" id="list_question">
+{% for answer in expand_question.answer_set.all %}
+<li id="answer_{{answer.id}}">   
+<div class="mbtl"><a href="/user/user.id" class="user">{{answer.user.first_name}}</a></div>
+<div class="mbtr"><p>{{answer.content|linebreaksbr}}</p></div>
+</li>
+{% endfor %}
+</ul>
+
+</div>
+<div class="rightcol" id="my-course">
+</div>
+{% include "./parts/footer.html" %} 
+</div> 
+</div>
+</body> 
+</html> 
+

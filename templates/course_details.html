@@ -6,7 +6,16 @@
 {% include "./parts/menu.html" %}
 
 <div id="course-brief">
-	<p><a href="/course/{{lecture.course.id}}">{{course.title}}</a></p>
+	<div>
+	<a href="/course/{{lecture.course.id}}">{{course.title}}</a>
+	{% if logged %}
+{% if registered %}
+<form class="fright" action="/course/{{course.id}}/quit/"><input type="submit"  method="post" value="退出"/></form>
+{% else %}
+<form class="fright" action="/course/{{course.id}}/register/"><input type="submit"  method="post" value="报名"/></form>
+{% endif %}
+{% endif %}
+<div>
 	<p>{{course.introduction}}</p>
 </div>
 <div id="lecture" class="block-list"> 

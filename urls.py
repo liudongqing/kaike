@@ -8,7 +8,6 @@ from kaike.course.models import *
 from django.views.generic.simple import direct_to_template
 from douban_client import douban_login
 
-admin.autodiscover()
 
 
 # Uncomment the next two lines to enable the admin:
@@ -17,12 +16,14 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     ('^$',Home),
+    ('^mine$',dashboard),
 
     (r'^image/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT+"/image/"}),
     (r'^css/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT+"/css/"}),
     (r'^admin/', include(admin.site.urls)),
     (r'^admin/course/()', include(admin.site.urls)),
     (r'^course/(?P<course_id>\d+)/$', view_course),
+    (r'^course/(?P<course_id>\d+)/register/$', reg_course),
     (r'^lecture/(?P<lecture_id>\d+)/$', view_lecture),
     (r'^lecture/(?P<lecture_id>\d+)/assignment/$', view_assign),
     (r'^lecture/(?P<lecture_id>\d+)/forum/$', list_questions),

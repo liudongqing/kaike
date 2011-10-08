@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.template import Context
-from kaike.course.models import Course,User,Lecture
+from kaike.course.models import *
 from kaike.answers.models import Question,new_question,new_answer
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
@@ -15,6 +15,7 @@ def Home(request):
     if request.user.is_authenticated():
         info['user'] = request.user
         info['logged']=True
+        info['reg_courses']=[x.course for x in Register.objects.filter(student=request.user)]
     t = get_template('index.html')
     html = t.render(Context(info))
     return HttpResponse(html)
@@ -26,6 +27,8 @@ def view_course(request,course_id):
     if request.user.is_authenticated():
         info['user'] = request.user
         info['logged']=True
+        if Register.is_registered(request.user,course):
+            info['registered']=True
     t = get_template(template_name)
     html = t.render(Context(info))
     return HttpResponse(html)
@@ -52,6 +55,11 @@ def view_assign(request,lecture_id):
     html = t.render(Context(info))
     return HttpResponse(html)
 
+def reg_course(request,course_id):
+    if request.user.is_authenticated():
+        course = Course.objects.get(pk=course_id)
+        register(request.user,course)
+    return redirect('/course/'+course_id)    
 
 def apply(request):
     template_name='apply.html'
@@ -66,6 +74,16 @@ def apply(request):
 def logout(request):
     auth.logout(request)
     return Home(request)
+
+def dashboard(request):
+    template_name='dashboard.html'
+    info = {}
+    if request.user.is_authenticated():
+        info['user'] = request.user
+        info['logged']=True
+    t = get_template(template_name)
+    html = t.render(Context(info))
+    return HttpResponse(html)
 
 def list_questions(request,lecture_id):
     """

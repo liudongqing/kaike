@@ -78,15 +78,4 @@ def douban_login(request):
             user.save()
         user = auth.authenticate(username=douban_user_id,password=access_secret)
         auth.login(request, user)
-        return logged(request,user)
     return redirect(CALLBACK_URL)
-
-def logged(request,user):
-    template_name='index.html'
-    t = get_template(template_name)
-    info={}
-    info.update(csrf(request))
-    info = {'course_list': Course.objects.all(),'user':user,'logged':True}
-    html = t.render(Context(info))
-    response = HttpResponse(html)
-    return response
