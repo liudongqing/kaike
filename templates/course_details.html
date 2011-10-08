@@ -1,62 +1,20 @@
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
-<html> 
-<head> 
-	<title>公开课</title> 
-<meta http-equiv="x-ua-compatible" content="ie=7"> 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
-<meta name="csrf-param" content="authenticity_token"/> 
-<meta name="csrf-token" content="3yvNdQgsZRfkiYc2lmMrUWKeMWLJYGi+XNhwQj5wlPw="/> 
- 
-<link href="http://assets.demohour.com/stylesheets/compass.css?1312542222" media="screen" rel="stylesheet" type="text/css" /> 
-<script src="http://assets.demohour.com/javascripts/jquery.min.js?1310662622" type="text/javascript"></script> 
-<script src="http://assets.demohour.com/javascripts/jquery-ui.min.js?1310662621" type="text/javascript"></script> 
-<script src="http://assets.demohour.com/javascripts/rails.js?1310662622" type="text/javascript"></script> 
-<script src="http://assets.demohour.com/javascripts/application.js?1312883812" type="text/javascript"></script> 
- 
-<script type="text/javascript"> 
-//<![CDATA[
-$(document).ready(function() {
-	
-})//]]>
-</script> 
-</head> 
+{% include "./parts/header.html" %}
 <body id="home_index" class="home index"> 
-<div id="headwrap"> 
+{% include "./parts/nav.html" %}
  
-<div class="demohour"> 
-<p><span></span>公开课是在线知识共享平台！<a class="link_to_learn-more-dialog" href="/intro">点击这里了解更多！</a></p> 
-</div> 
-</div> 
- 
-<!--菜单--> 
-<div id="header-wrap"> 
-<div id="header" class="demohour"> 
-<a href="/" class="logo"><img src="/image/logo.png" title="公开课" width='183' height="70"></a> 
-<div class="menu"> 
-<div> 
-<a href="/975655" class="on02">wuyouz</a><a href="/logout" class="on02">登出</a> 
-</div> 
-<ul> 
-	<li><a href="/intro" title="服务介绍" >课程集市</a></li> 
-<li id="myproject"> 
-<a href="/projects" title="我的课表">我的课表</a> 
-</li> 
-<li id="mydemohour"> 
-<a href="/my/credits" title="我要开课">我要开课</a> 
-</li> 
-</ul> 
-</div> 
-</div></div> 
- 
-<div class="projectwrap projectwraphome"> 
-<div class="urllist">
-{% for lecture in object.lecture_set.all %}
-<ul> 
-	<li class="list02"><a href="/course/{{lecture.course.id}}">{{lecture.course.title}}</a></li>
-<li class="list01"><a href="/lecture/{{lecture.id}}" title="{{lecture.title}}"><img src="/image/{{lecture.poster}}">{{lecture.title}}
-</li> 
+<div id="wrapper">
+{% include "./parts/menu.html" %}
 
+<div id="course-brief">
+	<p><a href="/course/{{lecture.course.id}}">{{course.title}}</a></p>
+	<p>{{course.introduction}}</p>
+</div>
+<div id="lecture" class="block-list"> 
+<div class="urllist">
+{% for lecture in course.lecture_set.all %}
+<ul> 
+<li class="list02"><a href="/lecture/{{lecture.id}}" title="{{lecture.title}}">{{lecture.title}}</a></li>
+<li class="list01"><a href="/lecture/{{lecture.id}}" title="{{lecture.title}}"><img alt="{{lecture.title}}}" src="/image/{{lecture.poster}}"></a></li> 
 <li class="list03">{{lecture.introduction}}</li> 
 <li class="list04"> 
 <div class="projectstats"> 
@@ -67,22 +25,7 @@ $(document).ready(function() {
 {% endfor %}
 </div> 
 </div> 
- 
-<div id=footer-wrap> 
-<div id=footer class="container"> 
-<div id=etc> 
-<ul> 
-<li><a href="/faq">常见问题/帮助</a></li> 
-<li><a href="/intro">服务介绍</a></li> 
-<li><a href="/terms_of_service">服务条款</a></li> 
-<li><a href="/privacy_policy">隐私权政策</a></li> 
-<li><a href="/about">关于我们</a></li> 
-<li class=last><a href="http://weibo.com/demohour" target="_blank">官方微博</a></li> 
-</ul> 
-</div> 
-<div id=legal>© 2011 公开课</div> 
- 
-</div> 
+{% include "./parts/footer.html" %} 
 </div> 
 </body> 
 </html> 

@@ -1,0 +1,243 @@
+body {
+font-family: helvetica,arial,"liberation sans",freesans,sans-serif;
+font-size: 13px;
+color: #333;
+line-height: 20px;
+}
+
+#wrapper {
+width: 950px;
+margin: 0 auto;
+}
+
+#header {
+width: 100%;
+margin: 0 0 40px 0;
+background: 0;
+}
+
+.top-nav {
+clear: both;
+width: 950px;
+margin: 0 auto;
+color: #D4D4D4;
+margin-bottom: 20px;
+height: 30px;
+border-bottom: 1px dashed #D4D4D4;
+}	
+
+.top-nav-items {
+float: left;
+font-size: 12px;
+margin-top: 3px;
+}
+
+.top-nav-info {
+float: right;
+margin-top: 5px;
+margin-left:10px;
+}
+
+.site-nav {
+float: right;
+width: 100%;
+height: 36px;
+clear: both;
+}
+
+.site-nav-items {
+float: left;
+position: relative;
+left: 0;
+top: 0;
+padding-left: 28px;
+line-height: 36px;
+color: #D4D4D4;
+}
+
+.site-nav-logo {
+float: left;
+position: relative;
+}
+
+.site-nav-items li {
+float:left;  
+margin-right: 30px;
+background: 0;
+color: #E9F4E9;
+}
+
+#lecture-nav {
+float: right;
+width: 100%;
+clear: both;
+}
+
+#lecture-nav-title {
+float: left;
+}
+
+#lecture-nav-items{
+	float:right
+}
+#lecture-nav-items li {
+float:left;  
+margin-right: 30px;
+background: 0;
+color: #E9F4E9;
+}
+
+
+ul {
+list-style: none;
+}
+
+li {
+display: list-item;
+text-align: -webkit-match-parent;
+}
+.block-list {
+width: 960px;
+margin: 0px auto;
+padding: 0px;
+overflow: hidden;
+display: block;
+clear: both;
+}
+.urllist {
+width: 990px;
+display: block;
+clear: both;
+margin: 0px 0px 0px 0px;
+overflow: hidden;
+text-align: left;
+}
+.urllist ul {
+display: block;
+float: left;
+width: 227px;
+height: 400px;
+margin: 14px 14px 4px 0px;
+border: #DDD 1px solid;
+list-style-type: none;
+padding-top: 6px;
+padding-left: 0px;
+overflow: hidden;
+}
+.urllist ul li {
+margin: 0px 7px 0px 6px;
+padding: 0px;
+display: block;
+clear: both;
+_height: 1%;
+line-height: 16px;
+}
+.urllist ul li.list02 {
+height: 16px;
+overflow: hidden;
+}
+.urllist ul li.list03 {
+height: 48px;
+overflow: hidden;
+overflow-x: hidden;
+overflow-y: hidden;
+}
+.urllist ul li.list04 {
+height: 66px;
+overflow: hidden;
+border: white 1px solid;
+border-top: white 0px solid;
+border-bottom: white 0px solid;
+margin: 11px 0px 0px 0px;
+padding: 0px;
+}
+
+#content {
+width: 960px;
+margin: 0px auto;
+text-align: left;
+clear: both;
+display: block;
+overflow: hidden;
+}
+.leftcol {
+width: 560px;
+float: left;
+overflow: hidden;
+}
+
+.rightcol {
+width: 370px;
+float: right;
+overflow: hidden;
+}
+
+.mbt {
+padding: 0;
+margin: 0;
+clear: both;
+}
+
+.mbtl {
+float: left;
+width: 55px;
+margin: 8px 7px 0 0;
+padding: 0;
+}
+
+.mbtr {
+border-bottom: 1px solid #EEE;
+padding: 5px 0;
+min-height: 55px;
+overflow: hidden;
+margin: 5px 0 5px 0;
+}
+
+.ask-question{
+padding: 0;
+margin: 2px 0 2em;
+overflow: hidden;
+overflow-x: hidden;
+overflow-y: hidden;
+}
+
+.ask-question textarea {
+width: 545px;
+padding: 5px;
+border: 1px solid #CCC;
+vertical-align: bottom;
+border-radius: 2px;
+overflow: hidden;
+}
+
+.bn-flat {
+vertical-align: middle;
+float: right
+}
+
+#answers {
+word-wrap: break-word;
+overflow: hidden;
+padding-left: 60px;
+}
+
+#footer {
+color: #999;
+padding-top: 6px;
+margin-top: 40px;
+overflow: hidden;
+zoom: 1;
+border-top: 1px dashed #DDD;
+}
+
+#title p{
+background-color: #E9F4E9
+}
+
+.fright {
+float: right;
+}
+
+.fleft{
+float: left;
+}

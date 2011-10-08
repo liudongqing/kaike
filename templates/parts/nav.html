@@ -1,0 +1,13 @@
+<div class="top-nav">  
+	<div class="top-nav-items"> 
+	公开课是在线知识共享平台！<a class="link_to_learn-more-dialog" href="/intro">点击这里了解更多！</a> 
+	</div> 
+	<div class="top-nav-info"> 
+	{% if logged %}
+	<a href="/user/{{user.id}}" class="on02">{{user.first_name}}</a>
+	<a href="/logout" class="on02">登出</a> 
+	{% else %}
+	<a href="/dlogin" class="on02"><img src="/image/douban.png" alt="login with douban id"/></a>
+	{% endif %}
+	</div>
+</div> 

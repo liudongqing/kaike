@@ -1,0 +1,17 @@
+<div class="rightcol" id="lecture-info">
+<div id="teacher"class="fleft">主讲人: <a href="/user/{{lecture.teacher.id}}">{{lecture.teacher}}</a></div>
+<br />
+<hr />
+<div class="sidebar_running">本次课程课件：<br> 
+<a href="http://iask.sina.com.cn/u/1973563093/ish?folderid=275419">点此下载</a>
+</div> 
+  
+<div id="reading"> 
+<h3><a href="/projects/297171/pledges/1745">补充阅读材料</a> <span class=num-backers>({{lecture.reading_set.all.count}})</span></h3> 
+{% for reading in lecture.reading_set.all %}
+<div class="xiangzhi">{{reading.title}}</div> 
+<a href="http://book.douban.com/subject/{{reading.serialno}}" title="" ><img src="http://img3.douban.com/mpic/s1007962.jpg" alt="{{reading.serialno}}"/></a> 
+{% endfor %}
+</div> 
+
+</div>

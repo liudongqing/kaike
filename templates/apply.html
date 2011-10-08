@@ -1,54 +1,12 @@
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
-<html> 
-<head> 
-	<title>公开课</title> 
-<meta http-equiv="x-ua-compatible" content="ie=7"> 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
-<meta name="csrf-param" content="authenticity_token"/> 
-<meta name="csrf-token" content="3yvNdQgsZRfkiYc2lmMrUWKeMWLJYGi+XNhwQj5wlPw="/> 
-<link href="http://assets.demohour.com/stylesheets/base.css?1313734092" media="screen" rel="stylesheet" type="text/css"> 
-<link href="http://assets.demohour.com/stylesheets/compass.css?1313734092" media="screen" rel="stylesheet" type="text/css" /> 
-
-<script src="http://assets.demohour.com/javascripts/jquery.min.js?1310662622" type="text/javascript"></script> 
-<script src="http://assets.demohour.com/javascripts/application.js?1313532634" type="text/javascript"></script> 
-<script src="http://assets.demohour.com/javascripts/player/jwplayer.js?1308803539" type="text/javascript"></script>
- 
-<script type="text/javascript"> 
-//<![CDATA[
-$(document).ready(function() {
-	
-})//]]>
-</script> 
-</head> 
+{% include "./parts/header.html" %}
 <body id="projects_show" class="projects project"> 
-<div id="headwrap"> 
+{% include "./parts/nav.html" %}
+
+<div id="wrapper">
+{% include "./parts/menu.html" %}
  
-<div class="demohour"> 
-<p><span></span>公开课是在线知识共享平台！<a class="link_to_learn-more-dialog" href="/intro">点击这里了解更多！</a></p> 
-</div> 
-</div> 
- 
-<!--菜单--> 
-<div id="header-wrap"> 
-<div id="header" class="demohour"> 
-<a href="/" class="logo"><img src="/image/logo.png" title="公开课" width='183' height="70"></a> 
-<div class="menu"> 
-<div> 
-<a href="/975655" class="on02">wuyouz</a><a href="/logout" class="on02">登出</a> 
-</div> 
-<ul> 
-	<li><a href="/" title="服务介绍" >课程集市</a></li> 
-<li id="myproject"> 
-<a href="/projects" title="我的课表">我的课表</a> 
-</li> 
-<li id="mydemohour"> 
-<a href="/my/credits" title="我要开课">我要开课</a> 
-</li> 
-</ul> 
-</div> 
-</div></div> 
-<div class="product960i">
+<div id="content">
+{% if logged %}
 <h3>填写课程内容和联系方式</h3>
 <form accept-charset="UTF-8" action="/projects" class="new_preproject" id="new_preproject" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="N4fsaSMEBdGuS1aAbLddiXb8JH5RCXE2R273W5AB8h4="></div>
 <div class="checkiiinu"><input name="project[agreement]" type="hidden" value="0"><input id="project_agreement" name="project[agreement]" type="checkbox" value="1">我已经了解并且同意公开课的项目申请准则与规范</div>
@@ -79,25 +37,15 @@ $(document).ready(function() {
 </li>
 </ul>
 <a href="#new_preproject_submit" class="input_onoff_on submit"><span>送出申请</span></a>
+{% else %}
+<div class="leftcol"> 
+<p>您必须 <a href="/dlogin" class="on02"><img src="/image/douban.png" alt="login with douban id"/></a> 才能申请 </p> 
+</div> 
+{% endif %}
 </div>
-
-
-<div id=footer-wrap> 
-<div id=footer class="container"> 
-<div id=etc> 
-<ul> 
-<li><a href="/faq">常见问题/帮助</a></li> 
-<li><a href="/intro">服务介绍</a></li> 
-<li><a href="/terms_of_service">服务条款</a></li> 
-<li><a href="/privacy_policy">隐私权政策</a></li> 
-<li><a href="/about">关于我们</a></li> 
-<li class=last><a href="http://weibo.com/demohour" target="_blank">官方微博</a></li> 
-</ul> 
-</div> 
-<div id=legal>© 2011 公开课</div> 
- 
-</div> 
-</div> 
+{% include "./parts/footer.html" %} 
+</div>
 </body> 
 </html> 
+
 

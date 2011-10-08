@@ -19,6 +19,50 @@ def Home(request):
     html = t.render(Context(info))
     return HttpResponse(html)
 
+def view_course(request,course_id):
+    template_name='course_details.html'
+    course = Course.objects.get(pk=course_id)
+    info = {'course': course}
+    if request.user.is_authenticated():
+        info['user'] = request.user
+        info['logged']=True
+    t = get_template(template_name)
+    html = t.render(Context(info))
+    return HttpResponse(html)
+
+def view_lecture(request,lecture_id):
+    template_name='lecture_details.html'
+    lecture = Lecture.objects.get(pk=lecture_id)
+    info = {'lecture': lecture}
+    if request.user.is_authenticated():
+        info['user'] = request.user
+        info['logged']=True
+    t = get_template(template_name)
+    html = t.render(Context(info))
+    return HttpResponse(html)
+
+def view_assign(request,lecture_id):
+    template_name='lecture_assignment.html'
+    lecture = Lecture.objects.get(pk=lecture_id)
+    info = {'lecture': lecture}
+    if request.user.is_authenticated():
+        info['user'] = request.user
+        info['logged']=True
+    t = get_template(template_name)
+    html = t.render(Context(info))
+    return HttpResponse(html)
+
+
+def apply(request):
+    template_name='apply.html'
+    info = {}
+    if request.user.is_authenticated():
+        info['user'] = request.user
+        info['logged']=True
+    t = get_template(template_name)
+    html = t.render(Context(info))
+    return HttpResponse(html)
+
 def logout(request):
     auth.logout(request)
     return Home(request)
@@ -29,8 +73,9 @@ def list_questions(request,lecture_id):
     """
     context = {}
     context.update(csrf(request))
-    if request.user :
+    if request.user.is_authenticated():
         context['logged'] = True
+        context['user'] = request.user
     try:
         lecture = Lecture.objects.get(pk=lecture_id)
         question_list = Question.objects.filter(topic=lecture.title)
@@ -58,7 +103,7 @@ def reply(request,lecture_id,question_id):
          question = Question.objects.get(pk=question_id)
          a = new_answer(request.user,content=request.POST['content'],question=question)
          a.save()
-    return redirect('/lecture/'+lecture_id+'/forum')   
+    return redirect('/lecture/'+lecture_id+'/forum/question/'+question_id)   
 
 def expand_question(request,lecture_id,question_id): 
     """
@@ -66,8 +111,9 @@ def expand_question(request,lecture_id,question_id):
     """
     context = {}
     context.update(csrf(request))
-    if request.user :
+    if request.user.is_authenticated():
         context['logged'] = True
+        context['user'] = request.user
     try:
         lecture = Lecture.objects.get(pk=lecture_id)
         expand_question= Question.objects.get(pk=question_id)

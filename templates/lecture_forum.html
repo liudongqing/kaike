@@ -1,161 +1,77 @@
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
-<html> 
-<head> 
-<title>公开课</title> 
-<meta http-equiv="x-ua-compatible" content="ie=7"> 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
-<meta name="csrf-param" content="authenticity_token"/> 
-<meta name="csrf-token" content="3yvNdQgsZRfkiYc2lmMrUWKeMWLJYGi+XNhwQj5wlPw="/> 
- 
-</head> 
-<body id="projects_show" class="projects project"> 
-<div id="headwrap"> 
- 
-<div class="demohour"> 
-<p><span></span>公开课是在线知识共享平台！<a class="link_to_learn-more-dialog" href="/intro">点击这里了解更多！</a></p> 
-</div> 
-</div> 
- 
-<!--菜单--> 
-<div id="header-wrap"> 
-<div id="header" class="demohour"> 
-<a href="/" class="logo"><img src="/image/logo.png" title="公开课" width='183' height="70"></a> 
-<div class="menu"> 
-<div> 
-<a href="/975655" class="on02">wuyouz</a><a href="/logout" class="on02">登出</a> 
-</div> 
-<ul> 
-	<li><a href="/" title="服务介绍" >课程集市</a></li> 
-<li id="myproject"> 
-<a href="/projects" title="我的课表">我的课表</a> 
-</li> 
-<li id="mydemohour"> 
-<a href="/my/credits" title="我要开课">我要开课</a> 
-</li> 
-</ul> 
-</div> 
-</div></div> 
-
-<div id=running-board style="margin-bottom:15px"> 
-<div class=content> 
-<div id=headrow> 
-<h1 id=name><a href="/projects/297171">{{lecture.title}}</a></h1> 
-<p>主讲人: <a href="/975145">{{lecture.teacher}}</a></p> 
-</div> 
-<ul id=running-board-nav class=menu-tabs> 
-<li><a href="/lecture/{{lecture.id}}">课堂主页</a> </li> 
-<li><a  href="/lecture/{{lecture.id}}/assignment">作业<span class="count" id="message_count">{{lecture.assignment_set.count}}</span></a> </li> 
-<li><a  class=current href="/lecture/{{lecture.id}}/forum">提问讨论<span class="count" id="comment_count">8</span></a> </li>  
-<li id="project_setting" style="display:none;"><a  href="/projects/297171/edit">项目设置<span class="count" id="project_status">上线中</span></a> </li> 
-</ul> 
-</div></div> 
+{% include "./parts/header.html" %}
+<body id="lecture-forum" > 
+{% include "./parts/nav.html" %} 
+<div id="wrapper">
+{% include "./parts/menu.html" %}
+{% include "./parts/lecture-nav.html" %}
 
 <div id=content> 
-<div id=leftcol> 
-<ul class="systemliuyan" id="list_comments">
-{% if expand_question %} 
+<div id="forum"  class="leftcol"> 
+{% if not expand_question %}
 
 {% if logged %}
-<div class="reply_new"> 
-<form accept-charset="UTF-8" action="/lecture/{{lecture.id}}/forum/question/{{expand_question.id}}/reply" class="new_reply" id="new_reply" method="post">
-	{% csrf_token %} 
-<textarea class="inputregoff textly" cols="40" id="comment_content" name="content" rows="3"></textarea> 
-<input type="submit"  value="回答" />  
-</form> 
-</div> 
-{% else %}
-<div class="comment_login displayoff"> 
-<p>您必须 <a href="/login?url=http%3A%2F%2Fwww.demohour.com%2Fprojects%2F297172%2Fupdates">登入</a> 才能回答 </p> 
-</div> 
-{% endif %}
-
-<li id="question_{{expand_question.id}}">   
-<div class="question"><a href="/user/user.id" class="user">{{expand_question.user.first_name}}</a></div> 
-<div class="question"><p>{{expand_question.title}}</p></div>
-<div class="question"><p>{{expand_question.content}}</p></div> 
-</li>
-
-
-{% for answer in expand_question.answer_set.all %}
-<li id="answer_{{answer.id}}">   
-<div class="answer"><p>{{answer.content}}</p></div>
-<div class="answer"><a href="/user/user.id" class="user">{{answer.user.first_name}}</a></div> 
-</li>
-{% endfor %}
-
-{% else %}
-{% if logged %}
-<div class="comment_new"> 
+<div class="ask-question" > 
 <form accept-charset="UTF-8" action="/lecture/{{lecture.id}}/forum/ask" class="new_comment" id="new_comment" method="post">
 	{% csrf_token %}
-<input type="text" name="title" />  
-<textarea class="inputregoff textly" cols="40" id="comment_content" name="content" rows="3"></textarea> 
-<input type="submit"  value="提问" />  
+标题：<input type="text" maxlength="140" size="50" name="title" /><span class="bn-flat"><input type="submit"  value="提问" /></span>  
+<textarea cols="40" id="comment_content" name="content" rows="3"></textarea> 
 </form> 
 </div> 
 {% else %}
 <div class="comment_login displayoff"> 
-<p>您必须 <a href="/login?url=http%3A%2F%2Fwww.demohour.com%2Fprojects%2F297172%2Fupdates">登入</a> 才能提问 </p> 
+<p>您必须 <a href="/dlogin" class="on02"><img src="/image/douban.png" alt="login with douban id"/></a> 才能提问 </p> 
 </div> 
 {% endif %}
+
+
+<hr />
+<ul class="mbt" id="list_question">
 
 {% for question in question_list %}
 <li id="question_{{question.id}}">   
-<div class="question"><a href="/user/user.id" class="user">{{question.user.first_name}}</a></div> 
-<div class="question"><p>{{question.title}}</p></div>
-<div class="question"><p>{{question.content}}</p><a href="/lecture/{{lecture.id}}/forum/question/{{question.id}}/" class="new_reply">回复（{{question.answer_set.all|length}}）</a></div> 
+<div class="mbtl"><a href="/user/user.id" class="user">{{question.user.first_name}}</a></div>
+<div class="mbtr"><span id="title"><p>{{question.title}}</p></span><p>{{question.content|linebreaksbr}}</p><a href="/lecture/{{lecture.id}}/forum/question/{{question.id}}/" class="fright">回复（{{question.answer_set.all|length}}）</a></div> 
 </li>
 {% endfor %}
+</ul>
+
+{% else %}<!-- single question mode-->
+
+<ul class="mbt" id="list_question">
+<li id="question_{{expand_question.id}}">   
+<div class="mbtl"><a href="/user/user.id" class="user">{{expand_question.user.first_name}}</a></div>
+<div class="mbtr"><span id="title"><p>{{expand_question.title}}</p></span><p>{{expand_question.content}}</p></div> 
+</li>
+
+{% if logged %}
+<div class="ask-question" > 
+<form accept-charset="UTF-8" action="/lecture/{{lecture.id}}/forum/question/{{expand_question.id}}/reply" class="new_reply" id="new_reply" method="post">
+	{% csrf_token %} 
+<textarea cols="40" id="comment_content" name="content" rows="3"></textarea> 
+<span class="bn-flat"><input type="submit"  value="回答" /></span>  
+</form> 
+</div> 
+{% else %}
+<div class="comment_login displayoff"> 
+<p>您必须 <a href="/dlogin" class="on02"><img src="/image/douban.png" alt="login with douban id"/></a> 才能回答 </p> 
+</div> 
+{% endif %}
+
+<div id="answers">
+{% for answer in expand_question.answer_set.all %}
+<li id="answer_{{answer.id}}">   
+<div class="mbtl"><a href="/user/user.id" class="user">{{answer.user.first_name}}</a></div>
+<div class="mbtr"><p>{{answer.content|linebreaksbr}}</p></div>
+</li>
+{% endfor %}
+<div>
 
 {% endif %}
 </ul>
-</div> 
-
-<div class="rightcol">
-<div id=moneyraised> 
-<h2>课程进度</h2> 
-
-<span style="WIDTH:40%;" class="bfbis">40%</span> 
-<div style="WIDTH:40%;" class="projectpledged"></div> 
- 
-<div class="divh5"> 
-<div class=num01><span>上线天数</span><b>4</b>天</div> 
-<div class=num02><span>听课人数</span><b>28</b>人</div> 
-</div> 
- 
-<div class="sidebar_running">本次课程课件：<br> 
-  <a href="http://iask.sina.com.cn/u/1973563093/ish?folderid=275419">点此下载</a></div> 
-</div> 
- 
-<div id=what-you-get> 
-<div class="reward"> 
-<div class=dollasignage> 
-<H3><a href="http://www.douban.com/people/{{object.teacher.douban_id}}">{{lecture.teacher}}</a> <span class=num-backers>主讲</span></H3> 
-<a href="/projects/297172/pledges/779" title="" onfocus="this.blur()" onmouseover="this.className='ademooffhover'" onmouseout="this.className='ademooffon'" onMouseDown="this.className='ademooffclick'" class="ademooffon"><span>问老师</span></a> 
-
-</div> 
-
-</div> 
-
 </div>
-</div> 
+{% include "./parts/lecture-info.html" %}
 </div>
-<div id=footer-wrap> 
-<div id=footer class="container"> 
-<div id=etc> 
-<ul> 
-<li><a href="/faq">常见问题/帮助</a></li> 
-<li><a href="/intro">服务介绍</a></li> 
-<li><a href="/terms_of_service">服务条款</a></li> 
-<li><a href="/privacy_policy">隐私权政策</a></li> 
-<li><a href="/about">关于我们</a></li> 
-<li class=last><a href="http://weibo.com/demohour" target="_blank">官方微博</a></li> 
-</ul> 
-</div> 
-<div id=legal>© 2011 公开课</div> 
- 
-</div> 
+{% include "./parts/footer.html" %} 
 </div> 
 </body> 
 </html> 
