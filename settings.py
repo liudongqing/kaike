@@ -1,26 +1,13 @@
 # Django settings for kaike project.
+from djangoappengine.settings_base import *
 
 import os.path
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+# Activate django-dbindexer for the default database
+DATABASES['native'] = DATABASES['default']
+DATABASES['default'] = {'ENGINE': 'dbindexer', 'TARGET': 'native'}
+AUTOLOAD_SITECONF = 'indexes'
 
-ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
-)
-
-MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'kaike',                      # Or path to database file if using sqlite3.
-        'USER': 'dba',                      # Not used with sqlite3.
-        'PASSWORD': 'p0o9i8u7',                  # Not used with sqlite3.
-        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                       # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -29,7 +16,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'China/Shanghai'
+#TIME_ZONE = 'China/Shanghai'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -57,7 +44,7 @@ MEDIA_URL = ''
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/media/admin'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '!@2jmrgmi)@(ki81nfn#bxw7!*rlxat$%#s-oyy%pflw0&6xxl'
@@ -70,6 +57,8 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    # This loads the index definitions, so it has to come first
+    'autoload.middleware.AutoloadMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -78,7 +67,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
 )
 
-ROOT_URLCONF = 'kaike.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -95,11 +84,24 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.comments',
-    # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
+    #'django.contrib.admin',
+    'course',
+    'answers',
     # 'django.contrib.admindocs',
-    'kaike.course',
-    'kaike.answers',
+    'djangotoolbox',
+    'autoload',
+    'dbindexer',
 
+    # djangoappengine should come last, so it can override a few manage.py commands
+    'djangoappengine',
+
+)
+
+GAE_SETTINGS_MODULES = (
+    'answers_settings',
+)
+
+
+ADMINS = (
+    ('Liu Dongqing', 'liudongqing@gmail.com'),
 )

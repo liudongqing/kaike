@@ -6,15 +6,21 @@
 {% include "./parts/menu.html" %}
 
 <div id="course-brief">
-	<div>
-	<a href="/course/{{lecture.course.id}}">{{course.title}}</a>
-	{% if logged %}
-{% if registered %}
-<form class="fright" action="/course/{{course.id}}/quit/"><input type="submit"  method="post" value="退出"/></form>
-{% else %}
-<form class="fright" action="/course/{{course.id}}/register/"><input type="submit"  method="post" value="报名"/></form>
+	
+	<a href="/course/{{course.id}}">{{course.title}}</a><span class="fright">
+{% if logged %}
+ {% if is_teacher %}
+<a href="/course/{{course.id}}/edit">编辑</a>
+<a href="/lecture/new/course/{{course.id}}">添加新课</a>
+ {% else %}
+  {% if registered %}
+<form action="/course/{{course.id}}/quit/"><input type="submit"  method="post" value="退出"/></form>
+  {% else %}
+<form action="/course/{{course.id}}/register/"><input type="submit"  method="post" value="报名"/></form>
+  {% endif %} 
+ {% endif %}
 {% endif %}
-{% endif %}
+</span>
 <div>
 	<p>{{course.introduction}}</p>
 </div>
@@ -24,10 +30,13 @@
 <ul> 
 <li class="list02"><a href="/lecture/{{lecture.id}}" title="{{lecture.title}}">{{lecture.title}}</a></li>
 <li class="list01"><a href="/lecture/{{lecture.id}}" title="{{lecture.title}}"><img alt="{{lecture.title}}}" src="/image/{{lecture.poster}}"></a></li> 
-<li class="list03">{{lecture.introduction}}</li> 
+<li class="list03"><p>{{lecture.outline}}</p></li> 
 <li class="list04"> 
 <div class="projectstats"> 
-<p class="widtha"><strong>{{lecture.duration}}分钟</strong></p> 
+<strong>{{lecture.duration}}分钟</strong> 
+{% if is_teacher %}
+<a href="/lecture/{{lecture.id}}/edit">编辑</a>
+{% endif %}
 </div>
 </li> 
 </ul> 

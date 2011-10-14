@@ -7,7 +7,25 @@
 	<a href="/user/{{user.id}}" class="on02">{{user.first_name}}</a>
 	<a href="/logout" class="on02">登出</a> 
 	{% else %}
-	<a href="/dlogin" class="on02"><img src="/image/douban.png" alt="login with douban id"/></a>
+{% block content %}
+
+  {% if form.errors or is_failed %}
+    <p class="error">Sorry, that's not a valid username or password</p>
+  {% endif %}
+
+  <form action="/login" method="post">
+  	{% csrf_token %}
+    <label for="username">用户名：</label>
+    <input type="text" name="username" value="" id="username">
+    <label for="password">密码：</label>
+    <input type="password" name="password" value="" id="password">
+    <input type="submit" value="login" />
+    <input type="hidden" name="next" value="{{ next|escape }}" />
+  </form>
+
+{% endblock %}
+
+	<!--<a href="/dlogin" class="on02"><img src="/image/douban.png" alt="login with douban id"/></a>-->
 	{% endif %}
 	</div>
 </div> 

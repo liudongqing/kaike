@@ -1,0 +1,25 @@
+{% include "./parts/header.html" %}
+<body id="projects_show" class="projects project"> 
+{% include "./parts/nav.html" %}
+
+<div id="wrapper">
+{% include "./parts/menu.html" %}
+
+<div id="edit" class="leftcol"> 
+	{% if not is_new %}
+	<form action="/lecture/{{lecture.id}}/save" method="post">
+	{% else %}
+    <form action="/lecture/create/course/{{course.id}}" method="post">
+    {% endif %}		
+		{% csrf_token %}
+		<ul>
+			{{ form.as_ul }}
+			<li><input type="submit" value="保存"></li>
+		</ul>
+	</form>
+</div>
+{% include "./parts/footer.html" %} 
+</div>
+</body> 
+</html> 
+

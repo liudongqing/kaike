@@ -6,10 +6,13 @@
 <div id="lecture-nav-items" class="fright">
 <ul id=running-board-nav > 
 <li><a class=current href="/lecture/{{lecture.id}}">课堂主页</a> </li> 
-<li><a  href="/lecture/{{lecture.id}}/assignment">作业<span class="count" id="message_count">{{lecture.assignment_set.count}}</span></a> </li> 
-<li><a  href="/lecture/{{lecture.id}}/forum">提问讨论<span class="count" id="comment_count">{{lecture.question_set.count}}</span></a> </li> 
-<li><a  href="/projects/297171/backers">听讲者<span class="count" id="backer_count">28</span></a> </li> 
-<li id="project_setting" style="display:none;"><a  href="/projects/297171/edit">项目设置<span class="count" id="project_status">上线中</span></a> </li> 
+<li><a  href="/lecture/{{lecture.id}}/assignment">作业{{lecture.assignment_set.count}}</a> </li> 
+<li><a  href="/lecture/{{lecture.id}}/forum">提问讨论{{lecture.question_set.count}}</a> </li> 
+<li><a  href="/projects/297171/backers">听讲者28</a> </li> 
+{% if is_teacher %}
+<li><a href="/lecture/{{lecture.id}}/edit">编辑</a></li>
+{% endif %}
+
 </ul> 
 </div>
 </div> 

@@ -8,7 +8,7 @@
 {% for course in course_list %}	
 <ul>
 <li class="list01"><a href="/course/{{course.id}}" title="{{course.title}}"><h2>{{course.title}}</h2><img src="image/{{course.poster}}" alt="{{course.title}}"></a></li> 
-<li class="list02"><a href="/user/{{course.teachers.all|first}}">{{course.teachers.all.0.first_name}}</a> 发起于 <a href="/shcool/{{course.school.id}}"><strong> {{course.school}}</strong></a></li> 
+<li class="list02"><a href="/user/{{course.teacher.id}}">{{course.teacher.first_name}}</a> 发起于 <a href="/shcool/{{course.school.id}}"><strong> {{course.school}}</strong></a></li> 
 <li class="list03">{{course.introduction}}</li> 
 <li class="list04"> 
 <span>课数:<strong>{{course.lecture_set.count}}</strong></span>

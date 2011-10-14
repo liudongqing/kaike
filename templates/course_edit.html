@@ -1,0 +1,26 @@
+{% include "./parts/header.html" %}
+<body id="home_index" class="home index"> 
+{% include "./parts/nav.html" %}
+ 
+<div id="wrapper">
+{% include "./parts/menu.html" %}
+
+<div id="course-brief">
+	<div>
+	<a href="/course/{{course.id}}">{{course.title}}</a><span class="fright"><a href="/course/{{course.id}}/">返回</a></span>
+</div>
+<div id="edit" class='content'>
+	<form action="/course/{{course.id}}/save" method="post">
+		{% csrf_token %}
+		<ul>
+			{{ form.as_ul }}
+			<li><input type="submit" value="保存"></li>
+		</ul>
+	</form>
+</div>
+</div>
+{% include "./parts/footer.html" %} 
+</div> 
+</body> 
+</html> 
+

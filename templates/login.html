@@ -1,58 +1,30 @@
 {% include "./parts/header.html" %}
-<body id="home_index" class="home index"> 
-<div id="headwrap"> 
- 
-<div class="demohour"> 
-<p><span></span>公开课是在线知识共享平台！<a class="link_to_learn-more-dialog" href="/intro">点击这里了解更多！</a></p> 
-</div> 
-</div> 
- 
-<!--菜单--> 
-<div id="header-wrap"> 
-<div id="header" class="demohour"> 
-<a href="/" class="logo"><img src="/image/logo.png" title="公开课" width='183' height="70"></a> 
-<div class="menu"> 
-<ul> 
-<li><a href="/" title="服务介绍" >公开课介绍</a></li> 
-</ul> 
-</div> 
-</div></div> 
- 
-<div class="demowrap"> 
-<div class="linleft"> 
-<ul class="login"> 
-<form action="/user_login" method="post">{% csrf_token %}
-<li class="linh2">登录 <span>或者 </span><a href="/signup">注册</a></li> 
-<li><label>用户名:</label> 
-<input tabindex=1 size=30 id="user_name" name="name" value=""></li> 
-<li><label>密码:</label> 
-<input tabindex=2 size=30 type="password" id="user_password" name="password" value=""> 
-<span class="lostpassword"><a href="/session/edit">忘记密码?</a></span></li> 
-<li><label>　</label><input type="hidden" name=auto_login value=0><input class="checkbox" tabindex=4 value=1 type=checkbox name=auto_login checked=&quot;checked&quot;> 
-<em>下次自动登录</em></li> 
-<li><label>　</label><input type="submit" value="登录"></input></li> 
-</ul> 
-</form></div> 
- 
-</div> 
+<body id="projects_show" class="projects project"> 
+{% include "./parts/nav.html" %}
 
-
-<div id=footer-wrap> 
-<div id=footer class="container"> 
-<div id=etc> 
-<ul> 
-<li><a href="/faq">常见问题/帮助</a></li> 
-<li><a href="/intro">服务介绍</a></li> 
-<li><a href="/terms_of_service">服务条款</a></li> 
-<li><a href="/privacy_policy">隐私权政策</a></li> 
-<li><a href="/about">关于我们</a></li> 
-<li class=last><a href="http://weibo.com/demohour" target="_blank">官方微博</a></li> 
-</ul> 
-</div> 
-<div id=legal>© 2011 公开课</div> 
+<div id="wrapper">
+{% include "./parts/menu.html" %}
  
-</div> 
-</div> 
+<div id="content">
+{% block content %}
+
+  {% if form.errors or is_failed %}
+    <p class="error">Sorry, that's not a valid username or password</p>
+  {% endif %}
+
+  <form action="/login" method="post">
+    <label for="username">用户名：</label>
+    <input type="text" name="username" value="" id="username">
+    <label for="password">密码：</label>
+    <input type="password" name="password" value="" id="password">
+    <input type="submit" value="login" />
+    <input type="hidden" name="next" value="{{ next|escape }}" />
+  </form>
+
+{% endblock %}
+
+</div>
+{% include "./parts/footer.html" %} 
+</div>
 </body> 
 </html> 
-

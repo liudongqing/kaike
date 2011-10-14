@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -13,9 +14,9 @@ class School(models.Model):
         return self.name
 
 class Course(models.Model):
-    title = models.CharField(max_length=100)
-    introduction = models.TextField()
-    teachers = models.ManyToManyField(User)
+    title = models.CharField(max_length=100,verbose_name=u'课名')
+    introduction = models.TextField(verbose_name=u'简介')
+    teacher = models.ForeignKey(User)
     poster = models.CharField(max_length=100)
     school= models.ForeignKey(School)
     open_date= models.DateField(auto_now=True)
@@ -35,18 +36,21 @@ class Register(models.Model):
         return cls.objects.filter(course=course,student=user).count() != 0
 
 class Lecture(models.Model):
-    title = models.CharField(max_length=100)
-    poster = models.CharField(max_length=100)
-    teacher = models.ForeignKey(User)
-    introduction = models.CharField(max_length=280,null=True)
-    course = models.ForeignKey(Course)
-    open_time= models.DateTimeField()
-    duration = models.IntegerField()
-    videourl = models.URLField()
-    outline = models.TextField()    
+    title = models.CharField(max_length=100,verbose_name='标题')
+    poster = models.CharField(max_length=100,verbose_name='海报')
+    teacher = models.ForeignKey(User,verbose_name='老师')
+    introduction = models.CharField(max_length=280,null=True,verbose_name='简介')
+    course = models.ForeignKey(Course,verbose_name='所属课程')
+    open_time= models.DateTimeField(auto_now_add=True,verbose_name='时间')
+    duration = models.IntegerField(verbose_name='时长')
+    vediourl = models.URLField(verify_exists=False,verbose_name='视频地址')
+    outline = models.TextField(verbose_name='大纲')    
 
     def __unicode__(self):
         return self.title
+    
+    def vedio_id(self):
+        return str(self.vediourl)[29:42]
     
 class Reading(models.Model):
     title = models.CharField(max_length=100)
